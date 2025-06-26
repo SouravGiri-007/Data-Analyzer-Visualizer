@@ -1,0 +1,168 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="row mb-4">
+  <div class="col-lg-12 text-center">
+    <div class="p-4 mb-4 bg-white rounded shadow-sm">
+      <h1 class="display-5 fw-bold mb-2"><i class="fa-solid fa-chart-line me-2 text-primary"></i>Interactive Data Visualizer & Analyzer</h1>
+      <p class="lead text-secondary">Upload, explore, analyze, and visualize your data with ease. Unlock insights and make data science fun!</p>
+    </div>
+  </div>
+</div>
+<div class="row justify-content-center mb-5">
+  <div class="col-md-8">
+    <div class="card shadow-lg border-0">
+      <div class="card-body">
+        <h2 class="card-title mb-3"><i class="fa-solid fa-upload text-primary me-2"></i>Upload Your Data</h2>
+        <form id="upload-form" enctype="multipart/form-data">
+          <div class="mb-3">
+            <label for="delimiter" class="form-label">CSV Delimiter (Auto-detect recommended)</label>
+            <select class="form-select" id="delimiter" name="delimiter">
+              <option value="auto" selected>Auto</option>
+              <option value=",">Comma (,)</option>
+              <option value="\t">Tab (\t)</option>
+              <option value="|">Pipe (|)</option>
+              <option value=";">Semicolon (;)</option>
+            </select>
+          </div>
+          <div class="form-check mb-3">
+            <input class="form-check-input" type="checkbox" id="skip_bad_lines" name="skip_bad_lines">
+            <label class="form-check-label" for="skip_bad_lines">Skip bad lines (may lose some data)</label>
+          </div>
+          <div class="mb-3">
+            <label for="skiprows" class="form-label">Skip first N lines (optional)</label>
+            <input type="number" class="form-control" id="skiprows" name="skiprows" min="0" value="0">
+          </div>
+          <div class="mb-3">
+            <input class="form-control form-control-lg" type="file" name="datafile" accept=".csv,.xlsx,.xls" required>
+          </div>
+          <button class="btn btn-primary btn-lg w-100" type="submit"><i class="fa-solid fa-arrow-up-from-bracket me-2"></i>Upload & Preview</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="row mb-4" id="preview">
+  <div class="col-lg-12">
+    <h3 class="mb-3 fw-bold" style="color:#2e7d32;"><i class="fa-solid fa-table me-2"></i>Data Preview</h3>
+    <div id="data-preview"><!-- Data preview will appear here --></div>
+  </div>
+</div>
+<div class="row mb-4" id="analyze">
+  <div class="col-lg-12">
+    <h3 class="mb-3 fw-bold" style="color:#0288d1;"><i class="fa-solid fa-magnifying-glass-chart me-2"></i>Analyze</h3>
+    <div id="analyze-section"><!-- Analysis tools will appear here --></div>
+  </div>
+</div>
+<div class="row mb-4" id="visualize">
+  <div class="col-lg-12">
+    <h3 class="mb-3 fw-bold" style="color:#f9a825;"><i class="fa-solid fa-chart-pie me-2"></i>Visualize</h3>
+    <div id="visualize-section"><!-- Visualization tools will appear here --></div>
+  </div>
+</div>
+<div class="row mb-4" id="advanced">
+  <div class="col-lg-12">
+    <h3 class="mb-3 fw-bold" style="color:#c62828;"><i class="fa-solid fa-gears me-2"></i>Advanced Features</h3>
+    <div class="d-flex flex-wrap gap-3">
+      <button class="btn btn-outline-primary adv-feature-btn d-flex align-items-center gap-2" data-bs-toggle="modal" data-bs-target="#modalCorrelation"><i class="fa-solid fa-braille"></i>Correlation Matrix</button>
+      <button class="btn btn-outline-secondary adv-feature-btn d-flex align-items-center gap-2" data-bs-toggle="modal" data-bs-target="#modalMissing"><i class="fa-solid fa-eraser"></i>Missing Value Handling</button>
+      <button class="btn btn-outline-success adv-feature-btn d-flex align-items-center gap-2" data-bs-toggle="modal" data-bs-target="#modalTransform"><i class="fa-solid fa-wand-magic-sparkles"></i>Data Transformation</button>
+      <button class="btn btn-outline-warning adv-feature-btn d-flex align-items-center gap-2" data-bs-toggle="modal" data-bs-target="#modalExport"><i class="fa-solid fa-image"></i>Export Charts as Images</button>
+      <button class="btn btn-outline-info adv-feature-btn d-flex align-items-center gap-2" data-bs-toggle="modal" data-bs-target="#modalSession"><i class="fa-solid fa-floppy-disk"></i>Save/Load Analysis Sessions</button>
+      <button class="btn btn-outline-danger adv-feature-btn d-flex align-items-center gap-2" data-bs-toggle="modal" data-bs-target="#modalML"><i class="fa-solid fa-robot"></i>Basic ML Models</button>
+    </div>
+  </div>
+</div>
+<!-- Modals for advanced features (placeholders) -->
+<div class="modal fade" id="modalCorrelation" tabindex="-1" aria-labelledby="modalCorrelationLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="modalCorrelationLabel"><i class="fa-solid fa-braille me-2"></i>Correlation Matrix</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body text-center text-secondary">
+        <p>Correlation Matrix tool coming soon!</p>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal fade" id="modalMissing" tabindex="-1" aria-labelledby="modalMissingLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="modalMissingLabel"><i class="fa-solid fa-eraser me-2"></i>Missing Value Handling</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body text-center text-secondary">
+        <p>Missing Value Handling tool coming soon!</p>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal fade" id="modalTransform" tabindex="-1" aria-labelledby="modalTransformLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="modalTransformLabel"><i class="fa-solid fa-wand-magic-sparkles me-2"></i>Data Transformation</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body text-center text-secondary">
+        <p>Data Transformation tool coming soon!</p>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal fade" id="modalExport" tabindex="-1" aria-labelledby="modalExportLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="modalExportLabel"><i class="fa-solid fa-image me-2"></i>Export Charts as Images</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body text-center text-secondary">
+        <p>Export Charts as Images tool coming soon!</p>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal fade" id="modalSession" tabindex="-1" aria-labelledby="modalSessionLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="modalSessionLabel"><i class="fa-solid fa-floppy-disk me-2"></i>Save/Load Analysis Sessions</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body text-center text-secondary">
+        <p>Save/Load Analysis Sessions tool coming soon!</p>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal fade" id="modalML" tabindex="-1" aria-labelledby="modalMLLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="modalMLLabel"><i class="fa-solid fa-robot me-2"></i>Basic ML Models</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body text-center text-secondary">
+        <p>Basic ML Models tool coming soon!</p>
+      </div>
+    </div>
+  </div>
+</div>
+<style>
+.adv-feature-btn {
+  min-width: 220px;
+  font-size: 1.1rem;
+  font-weight: 500;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+  transition: transform 0.1s, box-shadow 0.1s;
+}
+.adv-feature-btn:hover {
+  transform: translateY(-2px) scale(1.04);
+  box-shadow: 0 4px 16px rgba(0,0,0,0.10);
+  z-index: 2;
+}
+</style>
+{% endblock %} 
